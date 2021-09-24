@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>wikideploy</title>
+
+		<!-- Dependencies -->
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@300&family=Poppins:ital,wght@0,400;1,200;1,700&display=swap" rel="stylesheet">
+
+		<style>
+			body {
+				background-color: #0098c5;
+				color: white;
+				font-family: "Poppins", "Helvetica", "Arial", sans-serif;
+				margin: 0;
+				min-height: 100vh;
+			}
+
+			a {
+				color: white;
+			}
+
+			header {
+				box-sizing: border-box;
+				height: 80px;
+				padding: 16px;
+				user-select: none;
+			}
+
+			header h1 {
+				margin: 0;
+			}
+
+			main {
+                font-size: large;
+                box-sizing: border-box;
+				margin: 0 auto;
+				height: calc(100vh - 80px);
+				max-width: 768px;
+
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+				align-items: center;
+				text-align: center;
+			}
+
+			pre {
+				font-family: "Inconsolata", "Consolas", monospace;
+				background-color: rgba(0, 0, 0, 0.2);
+				border-radius: 15px;
+				padding: 8px;
+				margin: 16px 0;
+			}
+
+			#copy {
+				padding: 8px 4px;
+                font-family: "Poppins", "Helvetica", "Arial", sans-serif;
+				font-size: medium;
+				border: 0;
+				border-radius: 10px;
+				width: 200px;
+				background-color: white;
+				cursor: pointer;
+				transition: all 0.1s ease-in-out;
+			}
+
+            #copy:hover {
+                box-shadow: 0 4px 0 0 #ddd;
+				transform: translateY(-4px);
+            }
+
+            #copy:active {
+                box-shadow: 0 4px 0 0 #70c0d7;
+				background-color: #84e4ff;
+            }
+		</style>
+		<script>
+			var url = new URL(window.location.href);
+            var code = url.searchParams.get("code");
+            var oauth_verifier = url.searchParams.get("oauth_verifier");
+		</script>
+	</head>
+	<body>
+		<header>
+			<h1>wikideploy</h1>
+		</header>
+		<main>
+			<div id="blank">
+				This webpage is used to present the results of an <a href="https://www.mediawiki.org/wiki/Special:MyLanguage/OAuth">OAuth</a> verification. If you want to use this page, install the <a href="https://www.npmjs.com/package/wikideploy">wikideploy</a> package as part of your continuous deployment process.
+			</div>
+			<div id="provided">
+				Enter the following back into your terminal to continue the deployment process.
+				<pre id="code"><script>document.write(code || oauth_verifier)</script></pre>
+			</div>
+			<script>
+				if (!code && !oauth_verifier) {
+                    document.getElementById("provided").style.display = "none";
+				} else {
+                    document.getElementById("blank").style.display = "none";
+				}
+			</script>
+			<button id="copy">Copy</button>
+		</main>
+		<script>
+			var copyButton = document.getElementById("copy");
+
+            copyButton.onclick = function () {
+                navigator.clipboard.writeText(code || oauth_verifier).then(function () {
+                    copyButton.innerText = "✅ Copied!";
+				});
+			}
+		</script>
+	</body>
+</html>
