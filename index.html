@@ -95,14 +95,15 @@
 				Enter the following back into your terminal to continue the deployment process.
 				<pre id="code"><script>document.write(code || oauth_verifier)</script></pre>
 			</div>
-			<script>
-				if (!code && !oauth_verifier) {
-                    document.getElementById("provided").style.display = "none";
-				} else {
-                    document.getElementById("blank").style.display = "none";
-				}
-			</script>
 			<button id="copy">Copy</button>
+			<script>
+                if (!code && !oauth_verifier) {
+                    document.getElementById("provided").style.display = "none";
+                    document.getElementById("copy").style.display = "none";
+                } else {
+                    document.getElementById("blank").style.display = "none";
+                }
+			</script>
 		</main>
 		<script>
 			var copyButton = document.getElementById("copy");
